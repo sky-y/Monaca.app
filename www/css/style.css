@@ -1,0 +1,13 @@
+/*タイマー*/
+
+<style type="text/css">
+#CDT{
+ font-size: 26px;
+}
+#CDT .day{
+ font-size: 48px;
+}
+#CDT .hour,#CDT .min,#CDT .sec{
+ font-size: 32px;
+}
+</style>
