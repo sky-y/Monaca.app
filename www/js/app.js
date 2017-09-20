@@ -21,3 +21,7 @@ function addTodo(camera_url) {
     $('#timer').yycountdown({endDateTime:'2020/07/24 00:00:00'});
 };
 
+var strDate = $("date-deadline").text();  // HTMLフォームの文字列
+var date = new Date(strDate);  // 日付
+var jsonDate = JSON.stringify(date); // JSON形式
+

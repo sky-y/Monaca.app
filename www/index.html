@@ -12,26 +12,20 @@
     <script>
     var KEY = "key1";
 
-    // ローカルストレージをセットします。ここから
+    // ローカルストレージをセットします。
     function localStorageSetItem() {
         var obj = { url: "https://monaca.io"}
         localStorage.setItem(KEY, JSON.stringify(obj));
         alert("Local Storage: データーをセットしました。")
     }
 
-    // ローカルストレージの値を取得します。。
+    // ローカルストレージの値を取得します。。document文書
     function localStorageGetItem() {
         var item = localStorage.getItem(KEY);
         var obj = JSON.parse(item);
         document.getElementById("content").innerHTML = "url: " + obj.url;
     }
-
-    // ローカルストレージの指定されたキー名のデータを消去します。
-    function localStorageRemoveItem() {
-        localStorage.removeItem(KEY);
-        document.getElementById("content").innerHTML = "";
-    }
-
+    
     // ローカルストレージの全データを消去します。ここまで
     function localStorageClear() {
         localStorage.clear();
@@ -41,13 +35,20 @@
     
 </head>
 <body>
-    <div data-role="page" id="list-page">
+    <div data-role="page" id="list-page"> <!--  data-role page JQmobileのページ作成 -->
         <div data-role="header" data-position="fixed" data-theme="c">
             <h1>TODO App</h1>
-            <a href="#add-page" data-icon="add" class="ui-btn-right">Add</a>
+            <a href="#add-page" data-icon="add" class="ui-btn-left">追加</a>
+            <a href="f.html" data-icon="add" class="ui-btn-right">通知</a>
         </div>
         <div data-role="content">
             <ul data-role="listview" data-inset="true" id="todo-list"></ul>
+            <div>
+                <input type="button" value="日にち" onclick="localStorageSetItem();" />
+                <input type="button" value="残り日数" onclick="localStorageGetItem();" />
+                <input type="button" value="削除" onclick="localStorageClear();" />
+
+            </div>
         </div>
     </div>
 
@@ -66,6 +67,7 @@
 function CountdownTimer(elm,tl,mes){
  this.initialize.apply(this,arguments);
 }
+
 CountdownTimer.prototype={
  initialize:function(elm,tl,mes) {
   this.elem = document.getElementById(elm);
@@ -94,7 +96,7 @@ CountdownTimer.prototype={
  },addZero:function(num){ return ('0'+num).slice(-2); }
 }
 function CDT(){
- var tl = new Date('2036/1/1 00:00:00');
+ var tl = new Date('2017/10/1 00:00:00');
  var timer = new CountdownTimer('CDT',tl,'終了しました');
  timer.countDown();
 }
@@ -103,13 +105,9 @@ window.onload=function(){
 }
 </script>
             <!--ここまで-->
-            <input type="button" value="localStorage.setItem" onclick="localStorageSetItem();" />
-<input type="button" value="localStorage.getItem" onclick="localStorageGetItem();" />
-<input type="button" value="localStorage.removeItem" onclick="localStorageRemoveItem();" />
-<input type="button" value="localStorage.clear" onclick="localStorageClear();" />
-
+           
 <div id="content"></div>
-            
+            <input type="text" id="date-deadline" class="input-text">
             <input id="add-button" type="button" value="Save" onclick="addTodo()">
             <input id="add-button" type="button" value="Picture And Save" onclick="addTodoPicture()"  data-theme="b">
         </div>
