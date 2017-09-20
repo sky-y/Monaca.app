@@ -14,7 +14,7 @@
 
     // ローカルストレージをセットします。
     function localStorageSetItem() {
-        var obj = { url: "https://monaca.io"}
+        var obj = $("date-deadline").text();
         localStorage.setItem(KEY, JSON.stringify(obj));
         alert("Local Storage: データーをセットしました。")
     }
@@ -23,7 +23,7 @@
     function localStorageGetItem() {
         var item = localStorage.getItem(KEY);
         var obj = JSON.parse(item);
-        document.getElementById("content").innerHTML = "url: " + obj.url;
+        document.getElementById("content").innerHTML = obj;
     }
     
     // ローカルストレージの全データを消去します。ここまで
@@ -108,8 +108,7 @@ window.onload=function(){
            
 <div id="content"></div>
             <input type="text" id="date-deadline" class="input-text">
-            <input id="add-button" type="button" value="Save" onclick="addTodo()">
-            <input id="add-button" type="button" value="Picture And Save" onclick="addTodoPicture()"  data-theme="b">
+            <input id="add-button" type="button" value="Save" onclick="addTodo(), localStorageSetItem();">
         </div>
     </div>
 </body>
