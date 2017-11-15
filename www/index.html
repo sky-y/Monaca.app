@@ -31,7 +31,8 @@
     }
 </script>
     
-</head>
+</head
+
 <body>
     <div data-role="page" id="list-page"> <!--  data-role page JQmobileのページ作成 -->
         <div data-role="header" data-position="fixed" data-theme="c">
@@ -41,22 +42,99 @@
         </div>
         <div data-role="content">
             <ul data-role="listview" data-inset="true" id="todo-list"></ul>
-            <div> id="timer">00:00.000</div>
-            <div> class="controls"
-                <button> id="min">Min</button>
-                <button> id="sec">Sec</button>
-                <button> id="reset">Reset</button>
-                <button> id="start">Star</button>
-            </div>
-            <div>
-                <input type="button" value="日にち" onclick="localStorageSetItem();" />
-                <input type="button" value="残り日数" onclick="localStorageGetItem();" />
-                <input type="button" value="削除" onclick="localStorageClear();" />
-                
-                <div id="content"></div>
+                       <!-- タイマーここから -->
+            <script>
+
+var timer1; //タイマーを格納する変数（タイマーID）の宣言
 
 
-            </div>
+//カウントダウン関数を1000ミリ秒毎に呼び出す関数
+function cntStart()
+{
+  document.timer.elements[2].disabled=true;
+  timer1=setInterval("countDown()",1000);
+}
+
+//タイマー停止関数
+function cntStop()
+{
+  document.timer.elements[2].disabled=false;
+  clearInterval(timer1);
+}
+
+//カウントダウン関数
+function countDown()
+{
+  var day=document.timer.elements[0].value;
+  var min=document.timer.elements[0].value;
+  var sec=document.timer.elements[1].value;
+
+  if( (min=="") && (sec=="") )
+  {
+    alert("時刻を設定してください！");
+    reSet();
+  }
+  else
+  {
+    if (day=="") day=0;
+    day=parseInt(day);
+
+    if (min=="") min=0;
+    min=parseInt(min);
+
+    if (sec=="") sec=0;
+    sec=parseInt(sec);
+
+    tmWrite(min*60+sec-1);
+  }
+}
+
+//残り時間を書き出す関数
+function tmWrite(int)
+{
+  int=parseInt(int);
+
+  if (int<=0)
+  {
+    reSet();
+    alert("時間です！");
+  }
+  else
+  {
+    //残り分数はintを60で割って切り捨てる
+    document.timer.elements[0].value=Math.floor(int/60);
+    //残り秒数はintを60で割った余り
+    document.timer.elements[1].value=int % 60;
+      var msg = document.timer.elements[0].value + "分"+ document.timer.elements[1].value + "秒"; // 表示文作成
+      document.getElementById("PassageArea").innerHTML = msg; // 表示更新      
+  }
+}
+
+
+//フォームを初期状態に戻す（リセット）関数
+function reSet()
+{
+  document.timer.elements[0].value="0";
+  document.timer.elements[1].value="0";
+  document.timer.elements[2].disabled=false;
+  clearInterval(timer1);
+}  
+
+</script>
+
+</head>
+<body>
+
+<form name="timer">
+<input  type="text" value="" > 分 <input type="text" value=""> 秒
+<input type="button" value="スタート" onclick="cntStart()" class="sbt">
+<input type="button" value="ストップ" onclick="cntStop()" class="sbt" >
+</form>
+
+<h4>あと</h4>
+<h2 id="PassageArea"></h2>
+            <!--ここまで-->
+            
         </div>
     </div>
 
@@ -68,50 +146,7 @@
         <div data-role="content">
             <input id="todo-title" type="text" placeholder="TODOタイトル">
             <textarea id="todo-body" style="height: 8em" placeholder="説明文"></textarea>
-            <!-- タイマーここから -->
-            <div id="CDT"></div>
 
-<script language="JavaScript" type="text/javascript">
-function CountdownTimer(elm,tl,mes){
- this.initialize.apply(this,arguments);
-}
-CountdownTimer.prototype={
- initialize:function(elm,tl,mes) {
-  this.elem = document.getElementById(elm);
-  this.tl = tl;
-  this.mes = mes;
- },countDown:function(){
-  var timer='';
-  var today=new Date();
-  var day=Math.floor((this.tl-today)/(24*60*60*1000));
-  var hour=Math.floor(((this.tl-today)%(24*60*60*1000))/(60*60*1000));
-  var min=Math.floor(((this.tl-today)%(24*60*60*1000))/(60*1000))%60;
-  var sec=Math.floor(((this.tl-today)%(24*60*60*1000))/1000)%60%60;
-  var milli=Math.floor(((this.tl-today)%(24*60*60*1000))/10)%100;
-  var me=this;
-  if( ( this.tl - today ) > 0 ){
-   if (day) timer += '<span class="day">'+day+'日</span>';
-   if (hour) timer += '<span class="hour">'+hour+'時間</span>';
-   timer += '<span class="min">'+this.addZero(min)+'分</span><span class="sec">'+this.addZero(sec)+'秒</span><span class="milli">'+this.addZero(milli)+'</span>';
-   this.elem.innerHTML = timer;
-   tid = setTimeout( function(){me.countDown();},10 );
-  }else{
-   this.elem.innerHTML = this.mes;
-   return;
-  }
- },addZero:function(num){ return ('0'+num).slice(-2); }
-}
-function CDT(){
- var tl = new Date('2017/10/1 00:00:00');
- var timer = new CountdownTimer('CDT',tl,'終了しました');
- timer.countDown();
-}
-window.onload=function(){
- CDT();
-}
-</script>
-            <!--ここまで-->
-            <input type="text" id="date-deadline" class="input-text">
             <input id="add-button" type="button" value="保存" onclick="addTodo(), localStorageSetItem();">
         </div>
     </div>

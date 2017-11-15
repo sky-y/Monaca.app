@@ -6,11 +6,16 @@
     "framework_version": "3.5",
     "xcode_version": "8",
     "cordova_version": "6.5",
-    "plugin_settings": [],
+    "plugin_settings": {
+        "cordova-plugin-dialogs": {
+            "variables": []
+        }
+    },
     "external_plugins": [
         "cordova-plugin-whitelist@1.3.1",
         "cordova-plugin-splashscreen@4.0.3",
         "cordova-plugin-camera@2.4.1",
-        "cordova-custom-config@2.0.3"
+        "cordova-custom-config@2.0.3",
+        "cordova-plugin-dialogs@1.3.3"
     ]
 }
