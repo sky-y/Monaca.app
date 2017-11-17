@@ -9,29 +9,9 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/cssua.min.js"></script>
     <script src="js/app.js"></script>
-    <script>
-    var KEY = "key1";
-    // ローカルストレージをセットします。
-    function localStorageSetItem() {
-        var obj = $("date-deadline").text();
-        localStorage.setItem(KEY, JSON.stringify(obj));
-        alert("Local Storage: データーをセットしました。")
-    }
-    // ローカルストレージの値を取得します。。document文書
-    function localStorageGetItem() {
-        var item = localStorage.getItem(KEY);
-        var obj = JSON.parse(item);
-        document.getElementById("content").innerHTML = obj;
-    }
-    
-    // ローカルストレージの全データを消去します。ここまで
-    function localStorageClear() {
-        localStorage.clear();
-        document.getElementById("content").innerHTML = "";
-    }
-</script>
-    
-</head
+    <script src="js/localStorage.js"></script>
+    <script src="js/timer.js"></script>
+</head>
 
 <body>
     <div data-role="page" id="list-page"> <!--  data-role page JQmobileのページ作成 -->
@@ -42,94 +22,13 @@
         </div>
         <div data-role="content">
             <ul data-role="listview" data-inset="true" id="todo-list"></ul>
-                       <!-- タイマーここから -->
-            <script>
-
-var timer1; //タイマーを格納する変数（タイマーID）の宣言
-
-
-//カウントダウン関数を1000ミリ秒毎に呼び出す関数
-function cntStart()
-{
-  document.timer.elements[2].disabled=true;
-  timer1=setInterval("countDown()",1000);
-}
-
-//タイマー停止関数
-function cntStop()
-{
-  document.timer.elements[2].disabled=false;
-  clearInterval(timer1);
-}
-
-//カウントダウン関数
-function countDown()
-{
-  var day=document.timer.elements[0].value;
-  var min=document.timer.elements[0].value;
-  var sec=document.timer.elements[1].value;
-
-  if( (min=="") && (sec=="") )
-  {
-    alert("時刻を設定してください！");
-    reSet();
-  }
-  else
-  {
-    if (day=="") day=0;
-    day=parseInt(day);
-
-    if (min=="") min=0;
-    min=parseInt(min);
-
-    if (sec=="") sec=0;
-    sec=parseInt(sec);
-
-    tmWrite(min*60+sec-1);
-  }
-}
-
-//残り時間を書き出す関数
-function tmWrite(int)
-{
-  int=parseInt(int);
-
-  if (int<=0)
-  {
-    reSet();
-    alert("時間です！");
-  }
-  else
-  {
-    //残り分数はintを60で割って切り捨てる
-    document.timer.elements[0].value=Math.floor(int/60);
-    //残り秒数はintを60で割った余り
-    document.timer.elements[1].value=int % 60;
-      var msg = document.timer.elements[0].value + "分"+ document.timer.elements[1].value + "秒"; // 表示文作成
-      document.getElementById("PassageArea").innerHTML = msg; // 表示更新      
-  }
-}
-
-
-//フォームを初期状態に戻す（リセット）関数
-function reSet()
-{
-  document.timer.elements[0].value="0";
-  document.timer.elements[1].value="0";
-  document.timer.elements[2].disabled=false;
-  clearInterval(timer1);
-}  
-
-</script>
-
-</head>
-<body>
-
-<form name="timer">
-<input  type="text" value="" > 分 <input type="text" value=""> 秒
-<input type="button" value="スタート" onclick="cntStart()" class="sbt">
-<input type="button" value="ストップ" onclick="cntStop()" class="sbt" >
-</form>
+        
+            <!-- タイマーここから -->
+        <form name="timer">
+            <input  type="text" value="" > 分 <input type="text" value=""> 秒
+            <input type="button" value="スタート" onclick="cntStart()" class="sbt">
+            <input type="button" value="ストップ" onclick="cntStop()" class="sbt" >
+        </form>
 
 <h4>あと</h4>
 <h2 id="PassageArea"></h2>
